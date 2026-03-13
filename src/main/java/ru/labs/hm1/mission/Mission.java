@@ -96,13 +96,13 @@ public class Mission {
     public void displaySummary() {
         System.out.println("\nОтчет по миссии");
         for (Sorcerer s: sorcerers){
-            System.out.println("Маги:" + s.getName() + " " + s.getRank());
+            System.out.println("Имя мага: " + s.getName() + " Ранг мага: " + s.getRank());
         }
-        System.out.println("Проклятье:" + curse.getName() + " " + curse.getThreatLevel());
+        System.out.println("Название проклятья: " + curse.getName() + " Уровень проклятья: " + curse.getThreatLevel());
         for (Technique t: techniques){
-            System.out.println("Техника магов" + t.getName() + " " + t.getType() + " " + t.getOwner() + " " + t.getDamage());
+            System.out.println("Название техники мага: " + t.getName() + " Тип техники: " + t.getType() + " Имя владельца: " + t.getOwner() + " Наносимый урон: " + t.getDamage());
         }
-        System.out.println("Результат: " + outcome);
+        System.out.println("Результат миссии: " + outcome);
     }
 
 }
