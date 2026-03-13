@@ -9,14 +9,9 @@ import java.io.File;
 import java.io.IOException;
 
 public class MissionSaver {
-    private ObjectMapper objectMapper;
+    private static ObjectMapper objectMapper = new ObjectMapper().enable(SerializationFeature.INDENT_OUTPUT);
 
-    public MissionSaver(){
-        this.objectMapper = new ObjectMapper();
-        this.objectMapper.enable(SerializationFeature.INDENT_OUTPUT);
-    }
-
-    public void saveToJson(Mission mission, String fileName) throws IOException {
+    public static void saveToJson(Mission mission, String fileName) throws IOException {
         File file = new File(fileName);
         objectMapper.writeValue(file, mission);
         System.out.println("Файл успешно сохранен: " + fileName);
