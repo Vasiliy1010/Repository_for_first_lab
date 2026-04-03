@@ -1,3 +1,3 @@
-# Repository_for_first_lab
+# Repository_for_second_lab
 
-This repository for working on the lab1
+This repository for working on the lab2
