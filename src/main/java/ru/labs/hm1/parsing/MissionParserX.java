@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 
-public class MissionParserX extends MissionParser {
+public class MissionParserX implements MissionParser {
     private XmlMapper xmlMapper;
 
     public MissionParserX(){
@@ -16,7 +16,6 @@ public class MissionParserX extends MissionParser {
 
     @Override
     public Mission loadMission(String filePath) throws IOException {
-        existFile(filePath);
         File file = new File(filePath);
         return xmlMapper.readValue(file, Mission.class);
     }

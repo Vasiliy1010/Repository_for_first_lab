@@ -1,14 +1,15 @@
 package ru.labs.hm1;
 
-import ru.labs.hm1.parsing.MissionParser;
-import ru.labs.hm1.parsing.MissionParserJ;
-import ru.labs.hm1.parsing.MissionParserT;
-import ru.labs.hm1.parsing.MissionParserX;
+import ru.labs.hm1.parsing.*;
+import java.io.File;
 
 public class ParserFactory {
     public static MissionParser getParser(String filePath) throws Exception {
         String lowerPath = filePath.toLowerCase();
-
+        File file = new File(filePath);
+        if (!file.exists() || !file.isFile()) {
+            throw new Exception();
+        }
         if (lowerPath.endsWith(".json")) {
             return new MissionParserJ();
         }
@@ -18,8 +19,11 @@ public class ParserFactory {
         else if (lowerPath.endsWith(".txt")) {
             return new MissionParserT();
         }
+        else if (lowerPath.endsWith(".yaml")) {
+            return new MissionParserY();
+        }
         else {
-            throw new Exception();
+            return new MissionParserB();
         }
     }
 }
