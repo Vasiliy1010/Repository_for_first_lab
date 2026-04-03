@@ -1,10 +1,11 @@
 package ru.labs.hm1;
 
 import ru.labs.hm1.mission.Mission;
+import ru.labs.hm1.output.*;
 import ru.labs.hm1.parsing.MissionParser;
+import ru.labs.hm1.save.MissionSaverJ;
+import ru.labs.hm1.save.MissionSaverMain;
 
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Scanner;
 
 public class Main {
@@ -17,8 +18,11 @@ public class Main {
             MissionParser parser = ParserFactory.getParser(inputPath);
             System.out.println("Начинаем парсинг файла: " + inputPath);
             Mission mission = parser.loadMission(inputPath);
-            mission.displaySummary();
-            MissionSaver.saveToJson(mission, outputPath);
+            Summary sum = new SummaryBase(mission);
+            sum = new SummaryList(sum, mission);
+            sum.getSummary();
+            MissionSaverMain saver = new MissionSaverJ();
+            saver.save(mission, outputPath);
         } catch (Exception e) {
             System.err.println("Произошла ошибка");
         } finally {

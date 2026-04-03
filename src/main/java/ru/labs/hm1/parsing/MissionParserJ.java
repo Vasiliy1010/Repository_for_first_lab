@@ -6,7 +6,7 @@ import ru.labs.hm1.mission.Mission;
 import java.io.File;
 import java.io.IOException;
 
-public class MissionParserJ extends MissionParser {
+public class MissionParserJ implements MissionParser {
     private ObjectMapper objectMapper;
 
     public MissionParserJ(){
@@ -15,7 +15,6 @@ public class MissionParserJ extends MissionParser {
 
     @Override
     public Mission loadMission(String filePath) throws IOException {
-        existFile(filePath);
         File file = new File(filePath);
         return objectMapper.readValue(file, Mission.class);
     }
