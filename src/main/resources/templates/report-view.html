@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Отчет по миссии</title></head>
+<body>
+<h1>Детальный отчет по миссии #<span th:text="${missionId}"></span></h1>
+
+<div>
+    <a th:href="@{/missions/{id}/report(id=${missionId}, type='small')}">Маленький</a> |
+    <a th:href="@{/missions/{id}/report(id=${missionId}, type='medium')}">Средний</a> |
+    <a th:href="@{/missions/{id}/report(id=${missionId}, type='large')}">Большой</a>
+</div>
+
+<hr>
+<pre th:text="${report}" style="background: #f4f4f4; padding: 20px; border: 1px solid #ccc;"></pre>
+
+<a href="/missions">Назад к списку</a>
+</body>
+</html>

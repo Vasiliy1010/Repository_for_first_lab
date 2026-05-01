@@ -1,6 +1,6 @@
 package ru.labs.hm1.parsing;
 
-import ru.labs.hm1.mission.Mission;
+import ru.labs.hm1.model.Mission;
 import java.io.IOException;
 
 public interface MissionParser {

@@ -1,32 +1,28 @@
 package ru.labs.hm1;
 
-import ru.labs.hm1.mission.Mission;
-import ru.labs.hm1.output.*;
-import ru.labs.hm1.parsing.MissionParser;
-import ru.labs.hm1.save.MissionSaverJ;
-import ru.labs.hm1.save.MissionSaverMain;
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.ConfigurableApplicationContext;
+import ru.labs.hm1.gui.MissionDesktopFrame;
+import ru.labs.hm1.service.MissionService;
 
-import java.util.Scanner;
+import javax.swing.SwingUtilities;
 
+@SpringBootApplication
 public class Main {
+
     public static void main(String[] args) {
-        Scanner scanner = new Scanner(System.in);
-        System.out.println("Введите путь к файлу");
-        String inputPath = scanner.nextLine();
-        String outputPath = "D:/Labs/LabsJava/FirstLab/result.json";
-        try {
-            MissionParser parser = ParserFactory.getParser(inputPath);
-            System.out.println("Начинаем парсинг файла: " + inputPath);
-            Mission mission = parser.loadMission(inputPath);
-            Summary sum = new SummaryBase(mission);
-            sum = new SummaryList(sum, mission);
-            sum.getSummary();
-            MissionSaverMain saver = new MissionSaverJ();
-            saver.save(mission, outputPath);
-        } catch (Exception e) {
-            System.err.println("Произошла ошибка");
-        } finally {
-            scanner.close();
-        }
+        System.out.println(java.awt.GraphicsEnvironment.isHeadless());
+        SpringApplication app = new SpringApplication(Main.class);
+        app.setHeadless(false);
+
+        ConfigurableApplicationContext context = app.run(args);
+
+        MissionService missionService = context.getBean(MissionService.class);
+
+        SwingUtilities.invokeLater(() -> {
+            MissionDesktopFrame frame = new MissionDesktopFrame(missionService);
+            frame.setVisible(true);
+        });
     }
 }

@@ -3,7 +3,7 @@ package ru.labs.hm1.parsing;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.dataformat.yaml.YAMLFactory;
-import ru.labs.hm1.mission.Mission;
+import ru.labs.hm1.model.Mission;
 
 import java.io.File;
 import java.io.IOException;
