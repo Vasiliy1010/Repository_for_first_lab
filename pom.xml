@@ -20,7 +20,7 @@
         <maven.compiler.release>25</maven.compiler.release>
         <springdoc.version>3.0.2</springdoc.version>
         <datafaker.version>2.5.4</datafaker.version>
-        <lombok.version>1.18.38</lombok.version>   <!-- явно указываем версию Lombok -->
+        <lombok.version>1.18.38</lombok.version>
     </properties>
 
     <dependencies>
@@ -70,8 +70,6 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-thymeleaf</artifactId>
         </dependency>
-
-        <!-- Lombok с явной версией и scope provided -->
         <dependency>
             <groupId>org.projectlombok</groupId>
             <artifactId>lombok</artifactId>
@@ -82,7 +80,6 @@
 
     <build>
         <plugins>
-            <!-- Плагин компилятора с поддержкой Lombok -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
@@ -100,8 +97,6 @@
                     </annotationProcessorPaths>
                 </configuration>
             </plugin>
-
-            <!-- Плагин Spring Boot для сборки JAR -->
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
