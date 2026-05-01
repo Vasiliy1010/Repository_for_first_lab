@@ -1,6 +1,5 @@
-package ru.labs.hm1;
+package ru.labs.hm1.parsing;
 
-import ru.labs.hm1.parsing.*;
 import java.io.File;
 
 public class ParserFactory {

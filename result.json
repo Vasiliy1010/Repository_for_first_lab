@@ -1,1 +1,251 @@
-[]
+[ {
+  "id" : null,
+  "missionId" : "M-2024-021",
+  "date" : "2024-11-03",
+  "location" : "Токио, район Гиндза",
+  "outcome" : "SUCCESS",
+  "curse" : {
+    "name" : "Проклятие стеклянной галереи",
+    "threatLevel" : "SPECIAL_GRADE"
+  },
+  "economicAssessment" : {
+    "totalDamageCost" : 4800000,
+    "infrastructureDamage" : 1700000,
+    "transportDamage" : 900000,
+    "commercialDamage" : 2200000,
+    "recoveryEstimateDays" : 18,
+    "insuranceCovered" : true
+  },
+  "environment" : null,
+  "civilianImpact" : null,
+  "enemyActivity" : null,
+  "sorcerers" : [ {
+    "id" : null,
+    "name" : "Кугисаки Нобара",
+    "rank" : "GRADE_2",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Соломенная кукла",
+      "type" : "INNATE",
+      "damage" : 250000
+    } ]
+  }, {
+    "id" : null,
+    "name" : "Нанами Кэнто",
+    "rank" : "GRADE_1",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Коэффициент 7:3",
+      "type" : "INNATE",
+      "damage" : 980000
+    } ]
+  } ],
+  "operationTimeLine" : [ ],
+  "operationTags" : [ ],
+  "supportUnits" : [ ],
+  "recommendations" : [ ],
+  "artifactsRecovered" : [ ],
+  "evacuationZones" : [ ],
+  "statusEffects" : { },
+  "notes" : null
+}, {
+  "id" : null,
+  "missionId" : "M-2024-021",
+  "date" : "2024-11-03",
+  "location" : "Токио, район Гиндза",
+  "outcome" : "SUCCESS",
+  "curse" : {
+    "name" : "Проклятие стеклянной галереи",
+    "threatLevel" : "SPECIAL_GRADE"
+  },
+  "economicAssessment" : {
+    "totalDamageCost" : 4800000,
+    "infrastructureDamage" : 1700000,
+    "transportDamage" : 900000,
+    "commercialDamage" : 2200000,
+    "recoveryEstimateDays" : 18,
+    "insuranceCovered" : true
+  },
+  "environment" : null,
+  "civilianImpact" : null,
+  "enemyActivity" : null,
+  "sorcerers" : [ {
+    "id" : null,
+    "name" : "Кугисаки Нобара",
+    "rank" : "GRADE_2",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Соломенная кукла",
+      "type" : "INNATE",
+      "damage" : 250000
+    } ]
+  }, {
+    "id" : null,
+    "name" : "Нанами Кэнто",
+    "rank" : "GRADE_1",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Коэффициент 7:3",
+      "type" : "INNATE",
+      "damage" : 980000
+    } ]
+  } ],
+  "operationTimeLine" : [ ],
+  "operationTags" : [ ],
+  "supportUnits" : [ ],
+  "recommendations" : [ ],
+  "artifactsRecovered" : [ ],
+  "evacuationZones" : [ ],
+  "statusEffects" : { },
+  "notes" : null
+}, {
+  "id" : null,
+  "missionId" : "M-2024-021",
+  "date" : "2024-11-03",
+  "location" : "Токио, район Гиндза",
+  "outcome" : "SUCCESS",
+  "curse" : {
+    "name" : "Проклятие стеклянной галереи",
+    "threatLevel" : "SPECIAL_GRADE"
+  },
+  "economicAssessment" : {
+    "totalDamageCost" : 4800000,
+    "infrastructureDamage" : 1700000,
+    "transportDamage" : 900000,
+    "commercialDamage" : 2200000,
+    "recoveryEstimateDays" : 18,
+    "insuranceCovered" : true
+  },
+  "environment" : null,
+  "civilianImpact" : null,
+  "enemyActivity" : null,
+  "sorcerers" : [ {
+    "id" : null,
+    "name" : "Кугисаки Нобара",
+    "rank" : "GRADE_2",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Соломенная кукла",
+      "type" : "INNATE",
+      "damage" : 250000
+    } ]
+  }, {
+    "id" : null,
+    "name" : "Нанами Кэнто",
+    "rank" : "GRADE_1",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Коэффициент 7:3",
+      "type" : "INNATE",
+      "damage" : 980000
+    } ]
+  } ],
+  "operationTimeLine" : [ ],
+  "operationTags" : [ ],
+  "supportUnits" : [ ],
+  "recommendations" : [ ],
+  "artifactsRecovered" : [ ],
+  "evacuationZones" : [ ],
+  "statusEffects" : { },
+  "notes" : null
+}, {
+  "id" : null,
+  "missionId" : "M-2024-021",
+  "date" : "2024-11-03",
+  "location" : "Токио, район Гиндза",
+  "outcome" : "SUCCESS",
+  "curse" : {
+    "name" : "Проклятие стеклянной галереи",
+    "threatLevel" : "SPECIAL_GRADE"
+  },
+  "economicAssessment" : {
+    "totalDamageCost" : 4800000,
+    "infrastructureDamage" : 1700000,
+    "transportDamage" : 900000,
+    "commercialDamage" : 2200000,
+    "recoveryEstimateDays" : 18,
+    "insuranceCovered" : true
+  },
+  "environment" : null,
+  "civilianImpact" : null,
+  "enemyActivity" : null,
+  "sorcerers" : [ {
+    "id" : null,
+    "name" : "Кугисаки Нобара",
+    "rank" : "GRADE_2",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Соломенная кукла",
+      "type" : "INNATE",
+      "damage" : 250000
+    } ]
+  }, {
+    "id" : null,
+    "name" : "Нанами Кэнто",
+    "rank" : "GRADE_1",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Коэффициент 7:3",
+      "type" : "INNATE",
+      "damage" : 980000
+    } ]
+  } ],
+  "operationTimeLine" : [ ],
+  "operationTags" : [ ],
+  "supportUnits" : [ ],
+  "recommendations" : [ ],
+  "artifactsRecovered" : [ ],
+  "evacuationZones" : [ ],
+  "statusEffects" : { },
+  "notes" : null
+}, {
+  "id" : null,
+  "missionId" : "M-2024-021",
+  "date" : "2024-11-03",
+  "location" : "Токио, район Гиндза",
+  "outcome" : "SUCCESS",
+  "curse" : {
+    "name" : "Проклятие стеклянной галереи",
+    "threatLevel" : "SPECIAL_GRADE"
+  },
+  "economicAssessment" : {
+    "totalDamageCost" : 4800000,
+    "infrastructureDamage" : 1700000,
+    "transportDamage" : 900000,
+    "commercialDamage" : 2200000,
+    "recoveryEstimateDays" : 18,
+    "insuranceCovered" : true
+  },
+  "environment" : null,
+  "civilianImpact" : null,
+  "enemyActivity" : null,
+  "sorcerers" : [ {
+    "id" : null,
+    "name" : "Кугисаки Нобара",
+    "rank" : "GRADE_2",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Соломенная кукла",
+      "type" : "INNATE",
+      "damage" : 250000
+    } ]
+  }, {
+    "id" : null,
+    "name" : "Нанами Кэнто",
+    "rank" : "GRADE_1",
+    "techniques" : [ {
+      "id" : null,
+      "name" : "Коэффициент 7:3",
+      "type" : "INNATE",
+      "damage" : 980000
+    } ]
+  } ],
+  "operationTimeLine" : [ ],
+  "operationTags" : [ ],
+  "supportUnits" : [ ],
+  "recommendations" : [ ],
+  "artifactsRecovered" : [ ],
+  "evacuationZones" : [ ],
+  "statusEffects" : { },
+  "notes" : null
+} ]

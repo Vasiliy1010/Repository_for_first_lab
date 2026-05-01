@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Редактирование миссии</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow-sm mx-auto" style="max-width: 500px;">
+        <div class="card-body">
+            <h4 class="card-title mb-4">Редактирование миссии #<span th:text="${mission.id}"></span></h4>
+
+            <form th:action="@{/missions/update/{id}(id=${mission.id})}" method="post">
+                <div class="mb-3">
+                    <label class="form-label">Код миссии (только чтение)</label>
+                    <input type="text" class="form-control" th:value="${mission.missionId}" disabled>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Название Проклятья</label>
+                    <input type="text" name="curseName" class="form-control"
+                           th:value="${mission.curse != null ? mission.curse.name : ''}" required>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label font-weight-bold">Состав группы (имена через запятую)</label>
+                    <input type="text" name="sorcerersNames" class="form-control"
+                           th:value="${#strings.listJoin(mission.sorcerers.![name], ', ')}"
+                           placeholder="Например: Satoru Gojo, Yuji Itadori">
+                    <small class="form-text text-muted">Просто впишите имена. Они сохранятся для этой миссии.</small>
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Статус (Outcome)</label>
+                    <select name="outcome" class="form-select">
+                        <option value="SUCCESS" th:selected="${mission.outcome == 'SUCCESS'}">SUCCESS</option>
+                        <option value="FAILURE" th:selected="${mission.outcome == 'FAILURE'}">FAILURE</option>
+                        <option value="PARTIAL_SUCCESS" th:selected="${mission.outcome == 'PARTIAL_SUCCESS'}">PARTIAL_SUCCESS</option>
+                        <option value="UNKNOWN" th:selected="${mission.outcome == 'UNKNOWN'}">UNKNOWN</option>
+                    </select>
+                </div>
+                <div class="d-flex justify-content-between">
+                    <a href="/missions" class="btn btn-secondary">Отмена</a>
+                    <button type="submit" class="btn btn-success">Сохранить</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+</body>
+</html>

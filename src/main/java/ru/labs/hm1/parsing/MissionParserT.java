@@ -1,53 +1,64 @@
 package ru.labs.hm1.parsing;
 
-import ru.labs.hm1.mission.Curse;
-import ru.labs.hm1.mission.Mission;
-import ru.labs.hm1.mission.Sorcerer;
-import ru.labs.hm1.mission.Technique;
-
+import ru.labs.hm1.model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 public class MissionParserT implements MissionParser {
+
     @Override
     public Mission loadMission(String filePath) throws IOException {
         Mission mission = new Mission();
+        mission.setSorcerers(new ArrayList<>());
+        mission.setOperationTimeLine(new ArrayList<>());
+
         String currentSection = "";
+        Sorcerer currentSorcerer = null;
+
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 line = line.trim();
-                if (line.isEmpty()){
-                    continue;
-                }
+                if (line.isEmpty() || line.startsWith(";")) continue;
+
                 if (line.startsWith("[") && line.endsWith("]")) {
-                    currentSection = line.substring(1, line.length() - 1);
+                    currentSection = line.substring(1, line.length() - 1).toUpperCase();
+                    if (currentSection.equals("SORCERER")) {
+                        currentSorcerer = new Sorcerer();
+                        mission.getSorcerers().add(currentSorcerer);
+                    }
                     continue;
                 }
+
                 int separator = line.indexOf('=');
-                if (separator == -1){
-                    continue;
-                }
+                if (separator == -1) continue;
+
                 String key = line.substring(0, separator).trim();
                 String value = line.substring(separator + 1).trim();
+
                 switch (currentSection) {
                     case "MISSION":
                         mapMission(mission, key, value);
                         break;
                     case "CURSE":
-                        if (mission.getCurse() == null) {
-                            Curse curse = new Curse();
-                            mission.setCurse(curse);
-                        }
-                        mapCurse(mission.getCurse(), key, value);
+                        mapCurse(mission, key, value);
                         break;
-                    default:
-                        mapExtra(mission, currentSection, key, value);
+                    case "SORCERER":
+                        if (currentSorcerer != null) {
+                            mapSorcerer(currentSorcerer, key, value);
+                        }
+                        break;
+                    case "TECHNIQUE":
+                        mapTechnique(mission, key, value);
+                        break;
+                    case "EVENT":
+                        OperationTimeLine event = new OperationTimeLine();
+                        event.setTimestamp(event.getTimestamp());
+                        event.setEventInfo(value);
+                        mission.getOperationTimeLine().add(event);
                         break;
                 }
             }
@@ -56,54 +67,56 @@ public class MissionParserT implements MissionParser {
     }
 
     private void mapMission(Mission mission, String key, String value) {
-        switch (key) {
-            case "missionId":
-                mission.setMissionId(value);
-                break;
-            case "date":
-                mission.setDate(value);
-                break;
-            case "location":
-                mission.setLocation(value);
-                break;
+        switch (key.toLowerCase()) {
+            case "missionid": mission.setMissionId(value); break;
+            case "location": mission.setLocation(value); break;
+            case "date": mission.setDate(value); break;
             case "outcome":
-                mission.setOutcome(value);
+                try {
+                    mission.setOutcome(Outcome.valueOf(value.toUpperCase()));
+                } catch (Exception e) {
+                    mission.setOutcome(Outcome.UNKNOWN);
+                }
                 break;
         }
     }
 
-    private void mapCurse(Curse curse, String key, String value) {
-        if (curse == null) return;
-        switch (key) {
-            case "name":
-                curse.setName(value);
-                break;
-            case "threatLevel":
-                curse.setThreatLevel(value);
-                break;
-        }
-    }
-
-    private void mapExtra(Mission mission, String sectionName, String key, String value) {
-        Map<String, Object> extraFields = mission.getExtraFields();
-        Object sectionData = extraFields.get(sectionName);
-        if (!(sectionData instanceof Map)) {
-            sectionData = new HashMap<String, Object>();
-            extraFields.put(sectionName, sectionData);
-        }
-        Map<String, Object> map = (Map<String, Object>) sectionData;
-        if (map.containsKey(key)) {
-            Object existing = map.get(key);
-            if (existing instanceof List) {
-                ((List<Object>) existing).add(value);
-            } else {
-                List<Object> list = new ArrayList<>();
-                list.add(existing);
-                list.add(value);
-                map.put(key, list);
+    private void mapCurse(Mission mission, String key, String value) {
+        if (mission.getCurse() == null) mission.setCurse(new Curse());
+        if (key.equalsIgnoreCase("name")) mission.getCurse().setName(value);
+        if (key.equalsIgnoreCase("threatlevel")) {
+            try {
+                mission.getCurse().setThreatLevel(ThreatLevel.valueOf(value.toUpperCase()));
+            } catch (Exception e) {
+                mission.getCurse().setThreatLevel(ThreatLevel.UNKNOWN);
             }
-        } else {
-            map.put(key, value);
         }
+    }
+
+    private void mapSorcerer(Sorcerer sorcerer, String key, String value) {
+        switch (key.toLowerCase()) {
+            case "name": sorcerer.setName(value); break;
+            case "rank":
+                try {
+                    sorcerer.setRank(Rank.valueOf(value.toUpperCase()));
+                } catch (Exception e) {
+                    sorcerer.setRank(Rank.UNKNOWN);
+                }
+                break;
+        }
+    }
+
+    private void mapTechnique(Mission mission, String key, String value) {
+        String[] parts = value.split("\\|");
+        mission.getSorcerers().stream()
+                .filter(s -> s.getName() != null && s.getName().equalsIgnoreCase(key))
+                .findFirst()
+                .ifPresent(s -> {
+                    Technique t = new Technique();
+                    t.setName(parts[0].trim());
+                    if (parts.length > 1) t.setType(parts[1].trim());
+                    if (parts.length > 2) t.setDamage(Long.parseLong(parts[2].trim()));
+                    s.addTechnique(t);
+                });
     }
 }

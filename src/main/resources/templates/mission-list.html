@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head><title>Реестр Миссий</title></head>
+<body>
+<h1>Список магических миссий</h1>
+<table border="1">
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Локация</th>
+        <th>Результат</th>
+        <th>Действие</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr th:each="m : ${missions}">
+        <td th:text="${m.id}"></td>
+        <td th:text="${m.location}"></td>
+        <td th:text="${m.outcome}"></td>
+        <td>
+            <a th:href="@{/missions/{id}/report(id=${m.id}, type='large')}">Отчет</a>
+        </td>
+    </tr>
+    </tbody>
+</table>
+</body>
+</html>
