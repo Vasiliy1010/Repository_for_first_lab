@@ -5,6 +5,7 @@ import ru.labs.hm1.model.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class MissionParserB implements MissionParser {
 
@@ -25,8 +26,6 @@ public class MissionParserB implements MissionParser {
                 String key = line.substring(0, separator).trim();
                 String rawData = line.substring(separator + 1).trim();
                 String[] values = rawData.split("\\|");
-
-                // Обрабатываем каждую строку отдельно
                 mapMission(mission, key, values);
             }
         }
@@ -34,10 +33,9 @@ public class MissionParserB implements MissionParser {
     }
 
     private void mapMission(Mission mission, String key, String[] values) {
-        // Если значений нет, просто выходим, чтобы не было ошибки
         if (values == null || values.length == 0) return;
 
-        switch (key) {
+        switch (key.toUpperCase()) {
             case "MISSION_CREATED":
                 mission.setMissionId(values[0]);
                 if (values.length > 2) mission.setLocation(values[2]);
@@ -53,7 +51,7 @@ public class MissionParserB implements MissionParser {
             case "SORCERER_ASSIGNED":
                 Sorcerer sorcerer = new Sorcerer();
                 sorcerer.setName(values[0]);
-                // Безопасно парсим Enum
+                sorcerer.setTechniques(new ArrayList<>());
                 if (values.length > 1) {
                     try {
                         sorcerer.setRank(Rank.valueOf(values[1].toUpperCase()));
@@ -65,22 +63,28 @@ public class MissionParserB implements MissionParser {
                 break;
 
             case "TECHNIQUE_USED":
-                // Формат: TECHNIQUE_USED | Имя мага | Название техники | Тип | Урон
-                if (values.length >= 2) {
-                    String ownerName = values[0];
-                    // Ищем мага, который уже есть в миссии
-                    mission.getSorcerers().stream()
-                            .filter(s -> s.getName().equalsIgnoreCase(ownerName))
-                            .findFirst()
-                            .ifPresent(owner -> {
-                                Technique tech = new Technique();
-                                tech.setName(values[1]);
-                                tech.setType(values.length > 2 ? values[2] : "Innate");
-                                tech.setDamage(values.length > 3 ? Long.parseLong(values[3]) : 0L);
+                if (values.length >= 3) {
+                    String techName = values[0];
+                    String techType = values[1];
+                    String ownerName = values[2];
+                    long damage = values.length > 3 ? Long.parseLong(values[3]) : 0L;
 
-                                // Привязываем технику к магу (двусторонняя связь)
-                                owner.addTechnique(tech);
-                            });
+                    boolean found = false;
+                    for (Sorcerer s : mission.getSorcerers()) {
+                        if (s.getName().equalsIgnoreCase(ownerName)) {
+                            Technique tech = new Technique();
+                            tech.setName(techName);
+                            tech.setType(techType);
+                            tech.setDamage(damage);
+                            s.addTechnique(tech);
+                            found = true;
+                            break;
+                        }
+                    }
+                    if (!found) {
+                        String warning = "ВНИМАНИЕ: Маг " + ownerName + " не найден для техники " + techName;
+                        mission.setNotes(mission.getNotes() == null ? warning : mission.getNotes() + " | " + warning);
+                    }
                 }
                 break;
 
@@ -91,8 +95,6 @@ public class MissionParserB implements MissionParser {
                     mission.setOutcome(Outcome.UNKNOWN);
                 }
                 break;
-
-            // --- ОБРАБОТКА ДОП. ПОЛЕЙ (чтобы не падало) ---
 
             case "TAGS":
                 for (String v : values) mission.getOperationTags().add(v.trim());
@@ -107,15 +109,12 @@ public class MissionParserB implements MissionParser {
                 break;
 
             case "STATUS_EFFECT":
-                // Формат: STATUS_EFFECT | Название | Описание
                 if (values.length >= 2) {
                     mission.getStatusEffects().put(values[0].trim(), values[1].trim());
                 }
                 break;
 
             default:
-                // Если поле совсем неизвестно (например, "WEATHER" или "UNKNOWN_DATA")
-                // Мы просто записываем это в текстовое поле notes, чтобы данные не пропали
                 String unknownInfo = key + ": " + String.join(", ", values);
                 if (mission.getNotes() == null) {
                     mission.setNotes(unknownInfo);

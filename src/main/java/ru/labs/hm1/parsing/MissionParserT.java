@@ -17,6 +17,7 @@ public class MissionParserT implements MissionParser {
 
         String currentSection = "";
         Sorcerer currentSorcerer = null;
+        Technique currentTechnique = null;
 
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
             String line;
@@ -29,6 +30,8 @@ public class MissionParserT implements MissionParser {
                     if (currentSection.equals("SORCERER")) {
                         currentSorcerer = new Sorcerer();
                         mission.getSorcerers().add(currentSorcerer);
+                    } else if (currentSection.equals("TECHNIQUE")) {
+                        currentTechnique = new Technique();
                     }
                     continue;
                 }
@@ -52,7 +55,7 @@ public class MissionParserT implements MissionParser {
                         }
                         break;
                     case "TECHNIQUE":
-                        mapTechnique(mission, key, value);
+                        mapTechnique(mission, currentTechnique, key, value);
                         break;
                     case "EVENT":
                         OperationTimeLine event = new OperationTimeLine();
@@ -106,17 +109,32 @@ public class MissionParserT implements MissionParser {
         }
     }
 
-    private void mapTechnique(Mission mission, String key, String value) {
-        String[] parts = value.split("\\|");
-        mission.getSorcerers().stream()
-                .filter(s -> s.getName() != null && s.getName().equalsIgnoreCase(key))
-                .findFirst()
-                .ifPresent(s -> {
-                    Technique t = new Technique();
-                    t.setName(parts[0].trim());
-                    if (parts.length > 1) t.setType(parts[1].trim());
-                    if (parts.length > 2) t.setDamage(Long.parseLong(parts[2].trim()));
-                    s.addTechnique(t);
-                });
+    private void mapTechnique(Mission mission, Technique technique, String key, String value) {
+        switch (key.toLowerCase()) {
+            case "name":
+                technique.setName(value);
+                break;
+            case "type":
+                technique.setType(value);
+                break;
+            case "damage":
+                try {
+                    technique.setDamage(Long.parseLong(value));
+                } catch (NumberFormatException e) {
+                    technique.setDamage(0L);
+                }
+                break;
+            case "owner":
+                mission.getSorcerers().stream()
+                        .filter(s -> s.getName() != null && s.getName().equalsIgnoreCase(value))
+                        .findFirst()
+                        .ifPresent(s -> {
+                            if (s.getTechniques() == null) {
+                                s.setTechniques(new ArrayList<>());
+                            }
+                            s.addTechnique(technique);
+                        });
+                break;
+        }
     }
 }
